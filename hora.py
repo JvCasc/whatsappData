@@ -11,3 +11,5 @@ thigela["Tempo"] = thigela["Horário"].dt.hour
 hora_moda = thigela["Tempo"].mode()[0]
 
 print(f"Horário mais movimentado: {hora_moda}-{hora_moda+1}")
+
+#teste 
