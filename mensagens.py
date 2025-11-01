@@ -1,13 +1,24 @@
 import pandas as pd
 
-thigela = pd.read_csv("thigela.csv") # Comando padrão para ler o .csv
+thigela = pd.read_csv("thigela.csv")
 
-contagem = thigela["Nome"].value_counts().reset_index() # Conta a quantidade de mensagens e da um reset_index 
+pessoas = thigela["Nome"].drop_duplicates().to_list()
 
-contagem.columns = ["Nome", "Mensagens"] # Renomeia as colunas 
+i = 0
+j = 0;
 
-campeao = contagem.iloc[0] # Extrai somente a primeira linha 
+mais_mensagem = 0;
+nome_mais_mensagem = ""
 
-print(f"Tabela de participantes do grupo: \n{thigela["Nome"].value_counts()}")
+for nome in pessoas:
+    for index, row in thigela[thigela["Nome"] == nome].iterrows():
+        i += 1
+        if i > mais_mensagem:
+            mais_mensagem = i
+            nome_mais_mensagem = nome
+    if "+55" not in nome:
+        print(f"{nome} enviou {i} mensagens")
+    i = 0
 
-print(f"{campeao["Nome"]} foi quem mais enviou mensagens: {campeao["Mensagens"]} 👑")
+print("----------")
+print(f"Quem enviou mais mensagem: {nome_mais_mensagem} com {mais_mensagem} mensagens 👑")
