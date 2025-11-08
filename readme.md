@@ -1,6 +1,6 @@
 # 🐢 WhatsApp Wrapped – Analisador de Conversas
 
-Uma forma fácil de exbir dados sobre suas **conversas do WhatsApp** e visualizar **estatísticas e visualizações** sobre a conversa: quem mais mandou mensagem, dias mais ativos e etc...
+Uma forma fácil de exbir dados sobre suas **conversas do WhatsApp** e visualizar **estatísticas** sobre a conversa: quem mais mandou mensagem, dias mais ativos, etc...
 
 > Perfeito para matar a curiosidade sobre qual amigo mais fala, quem some do grupo e como o grupo se comporta ao longo do tempo. 😅
 
@@ -53,3 +53,4 @@ Uma forma fácil de exbir dados sobre suas **conversas do WhatsApp** e visualiza
 
 Instale as dependências com pip install -r requirements.txt:
 
+Rode com o comando "streamlit run main.py"
