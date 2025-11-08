@@ -1,5 +1,5 @@
 import streamlit as st
-from modulos import mensagens, txt_excel
+from modulos import mensagens, txt_excel, ano_mes
 import io
 
 st.set_page_config(page_title="Wrapped", page_icon="🐢")
@@ -12,7 +12,7 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-st.header("🐢 Whatsapp Wrapped")
+st.title("🐢 Whatsapp Wrapped")
 
 # --------- Estado ---------
 if "uploaded_file" not in st.session_state:
@@ -23,6 +23,8 @@ if "acao" not in st.session_state:
     st.session_state.acao = None         # qual botão foi clicado
 if "resultado_botao1" not in st.session_state:
     st.session_state.resultado_botao1 = None  # (falador, nMensagens)
+if "resultado_botao2" not in st.session_state:
+    st.session_state.resultado_botao1 = None  # (periodo, nMensagensMes)
 
 # --------- Funções (defina ANTES de usar) ---------
 def processar_upload(uf):
@@ -35,6 +37,11 @@ def executar_botao1():
     falador, n = mensagens.falador("whatsapp_conversa_tabela.csv")
     st.session_state.resultado_botao1 = (falador, n)
     st.session_state.acao = "botao1"
+
+def executar_botao2():
+    periodo, nMensagensMes = ano_mes.periodo_mes("whatsapp_conversa_tabela.csv")
+    st.session_state.resultado_botao2 = (periodo, nMensagensMes)
+    st.session_state.acao = "botao2"
 
 # --------- Layout superior (botões em colunas) ---------
 col1, col2, col3 = st.columns(3)
@@ -49,7 +56,7 @@ with col1:
 with col2:
     if st.button('⏰ Atividade do grupo', use_container_width=True):
         if st.session_state.csv_pronto:
-            st.session_state.acao = "atividade"
+            executar_botao2()
         else:
             st.warning("Envie o arquivo .txt para ver a atividade.")
 
@@ -83,9 +90,12 @@ with rodape:
         st.subheader("👑 Resultado")
         st.text(f"Quem enviou mais mensagem: {falador} com {n} mensagens!")
         # Se quiser exibir imagem/gráfico aqui, ele não fica limitado pelas columns.
-    elif st.session_state.acao == "atividade":
+    elif st.session_state.acao == "botao2" and st.session_state.resultado_botao2:
+        periodo, nMensagensMes = st.session_state.resultado_botao2 
+        mes = periodo["AnoMes"] 
+        nMMes = periodo["Mensagem"]
         st.subheader("⏰ Atividade do grupo")
-        st.info("…renderize gráficos/tabelas aqui…")
+        st.text(f"Mês mais ativo: {mes} com {nMMes} mensagens!")
     elif st.session_state.acao == "palavra":
         st.subheader("🔤 Palavra mais dita")
         st.info("…renderize nuvem de palavras/tabela aqui…")
