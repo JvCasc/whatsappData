@@ -21,7 +21,6 @@ env/
 *.log
 
 # Dados sensíveis ou brutos
-*.txt
 *.csv
 
 # Arquivos exportados/análises
